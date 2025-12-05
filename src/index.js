@@ -3,7 +3,14 @@ dotenv.config();
 import mongoose, { connect } from "mongoose";
  import express from "express";
  import { connectDB } from "./db/db.js";
- connectDB();
+ connectDB().then(
+    () => { 
+        app.listen(process.env.PORT || 8000, () => {
+            console.log(`Server is running on port ${process.env.PORT || 8000}`);
+        });
+ }).catch((err) => {
+   console.log("Error in DB connection", err);
+ });
 // import { DB_Name } from "./constants.js";
 // const app = express();
 // (async () => {
