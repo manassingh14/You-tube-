@@ -7,3 +7,4 @@ class ApiResqonse {
         
     }
 }
+export default ApiResqonse;
