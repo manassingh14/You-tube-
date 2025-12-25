@@ -1,13 +1,9 @@
-export const asyncHandler = (fn) => async(req, res, next) => {
+export const asyncHandler = (fn) => {
+  return async (req, res, next) => {
     try {
-        await fn(req, res, next);
+      await fn(req, res, next);
     } catch (error) {
-        res.status(500).json({
-            success: false,
-             message: error.message
-
-         });
+      next(error); // ✅ THIS is the key fix
     }
-
-}
-
+  };
+};

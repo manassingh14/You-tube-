@@ -1,21 +1,28 @@
-import { v2 as cloudinary } from 'cloudinary'
-import fs from 'fs'
-cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'my_cloud', 
-  api_key: process.env.CLOUDINARY_API_KEY || 'my_key', 
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'my_secret'
+import dotenv from "dotenv";
+dotenv.config();
+
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-const uploadImage = async (filePath) => {
-    try {
-        if(!filePath) return null;
-        const result = await cloudinary.uploader.upload(filePath, {
-            resource_type: 'auto',
-        });
-        return result;   
-    }
-    catch (error) {
-        fs.unlinkSync(filePath);
-        return null;
-    }
+
+export const uploadImage = async (filePath) => {
+  if (!filePath) return null;
+
+  try {
+    const result = await cloudinary.uploader.upload(filePath, {
+      resource_type: "auto",
+    });
+    fs.unlinkSync(filePath);
+    return result;
+  } catch (error) {
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    throw error;
+  }
 };
-export { uploadImage };
