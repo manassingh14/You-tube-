@@ -65,7 +65,7 @@ export const userRegistrationHandler = asyncHandler(async (req, res) => {
 });
 export const userLoginHandler = asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
-    if (!username || !email) {
+    if (!(username || email)) {
         throw new ApiError(400, "username or email are required");
     }
     const user = await User.findOne({
@@ -97,7 +97,7 @@ export const userLoginHandler = asyncHandler(async (req, res) => {
 
 
 })
-const userLogout = asyncHandler(async(req,res)=>{
+export const userLogout = asyncHandler(async(req,res)=>{
  User.findByIdAndUpdate(
     req.user._id,
     {
