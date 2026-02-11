@@ -201,7 +201,7 @@ export const upadteAccount = asyncHandler(async (req, res) => {
         new ApiResponse(200, user, "Account details updated succesfully")
     )
 })
-export const avatarUpdate = asuncHandler(async (req, res) => {
+export const avatarUpdate = asyncHandler(async (req, res) => {
     const avatarPath = req.file?.path;
     if (!avatarPath) {
         throw new ApiError(400, "avatar feild is required");
@@ -222,7 +222,7 @@ export const avatarUpdate = asuncHandler(async (req, res) => {
         new ApiResponse(200, user, "Avatar image is succefully updated")
     )
 })
-export const coverImageUpdate = asuncHandler(async (req, res) => {
+export const coverImageUpdate = asyncHandler(async (req, res) => {
     const coverPath = req.file?.path;
     if (!coverPath) {
         throw new ApiError(400, "cover feild is required");
@@ -318,7 +318,7 @@ export const getUserChannelProfile = asyncHandler(async (req, res) => {
 
 })
 
-export const getWatchHistory = asuncHandler(async () => {
+export const getWatchHistory = asyncHandler(async () => {
     const user = await User.aggregate(
         [
             {
